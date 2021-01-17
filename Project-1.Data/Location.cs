@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Project_1.Data
 {
-    class Location
+    public class Location
     {
         public int X { get; }
 

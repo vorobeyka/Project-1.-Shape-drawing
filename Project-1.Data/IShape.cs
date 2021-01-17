@@ -6,5 +6,6 @@ namespace Project_1.Data
 {
     interface IShape
     {
+        Location Location { get; }
     }
 }
