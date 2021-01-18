@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Project_1.Data
 {
-    interface IShape
+    interface ICreateShape
     {
-        Location Location { get; }
+        void CreateShape();
     }
 }
