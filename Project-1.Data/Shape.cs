@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Project_1.Data.Exceptions;
 
 namespace Project_1.Data
 {
@@ -24,9 +25,9 @@ namespace Project_1.Data
 
         public Shape(char? drawItem, bool isFill)
         {
-            if (drawItem == ' ')
+            if (drawItem < 33 || drawItem > 126)
             {
-                throw new ArgumentException(nameof(drawItem));
+                throw new UnexpectedDrawItemException();
             }
             DrawItem = drawItem ?? throw new ArgumentNullException(nameof(drawItem));
             IsFill = isFill;
@@ -35,7 +36,7 @@ namespace Project_1.Data
 
         public override string ToString()
         {
-            var res = $"Id: {Id}\nPerimeter: {Perimeter}\nArea: {Area}\n";
+            var res = $"Id: {Id}\nPerimeter: {Math.Round(Perimeter, 4)}\nArea: {Math.Round(Area, 4)}\n";
             for (int i = 0; i < ShapeMatrix.Length; i++)
             {
                 foreach (var j in ShapeMatrix[i])

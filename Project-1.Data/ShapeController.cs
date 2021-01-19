@@ -10,12 +10,19 @@ namespace Project_1.Data
 {
     public static class ShapeController
     {
+        private static readonly string _filePath = "cache.json";
+
         public static void DeleteShape(int id)
         {
             var shapes = GetShapes() ?? throw new ShapeNullException("Empty shapes list");
-            var deletedShape = GetShapeById(id) ?? throw new ShapeNullException($"Not find shape with id {id}");
-            shapes.Remove(deletedShape);
-            UpdateCache(shapes);
+            var deletedShape = GetShapeById(id) ?? throw new ShapeNullException(id.ToString());
+            Console.WriteLine(deletedShape);
+            Console.Write("Do you want to delete? (y) \n-> ");
+            if (IsUnswerYes())
+            {
+                shapes.Remove(deletedShape);
+                UpdateCache(shapes);
+            }
         }
 
         public static void CreateLine()
@@ -83,20 +90,20 @@ namespace Project_1.Data
             var shapes = GetShapes() ?? new List<Shape>();
             shapes.Add(newShape);
             var json = JsonSerializer.Serialize(shapes);
-            File.WriteAllText("cache.json", json);
+            File.WriteAllText(_filePath, json);
         }
 
         private static void UpdateCache(List<Shape> shapes)
         {
             var json = JsonSerializer.Serialize(shapes);
-            File.WriteAllText("cache.json", json);
+            File.WriteAllText(_filePath, json);
         }
 
         public static List<Shape> GetShapes()
         {
             try
             {
-                var json = File.ReadAllText("cache.json");
+                var json = File.ReadAllText(_filePath);
                 var clone = JsonSerializer.Deserialize<List<Shape>>(json);
                 return clone;
             }
@@ -108,7 +115,7 @@ namespace Project_1.Data
         
         public static Shape GetShapeById(int id)
         {
-            var shape = GetShapes()?.Find(x => x.Id == id);
+            var shape = GetShapes()?.Find(x => x.Id == id) ?? throw new ShapeNullException(id.ToString()); ;
             return shape;
         }
 
@@ -117,7 +124,7 @@ namespace Project_1.Data
             Console.Write("Sort by:\n1. Id asceding\n2. Id descending\n3. Perimeter asceding\n" +
                               "4. Perimeter descending\n5. Area asceding\n6. Area descenging\n-> ");
             var key = Console.ReadKey().KeyChar;
-            var shapes = GetShapes() ?? throw new ShapeNullException("Empty shapes list");
+            var shapes = GetShapes() ?? throw new ShapeListNullException();
             Console.WriteLine();
             switch (key)
             {
