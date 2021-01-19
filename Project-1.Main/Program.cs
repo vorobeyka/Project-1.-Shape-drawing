@@ -25,7 +25,27 @@ namespace Project_1.Main
 
         static void CreateShape()
         {
-            Console.WriteLine("Create shape.");
+            while (true)
+            {
+                Console.WriteLine("Create shape.");
+                Console.Write("1. Line\n2. Triangle\n3. Rectangle\n4. Circle\n5. Back\n-> ");
+                var key = Console.ReadKey().KeyChar;
+                Console.Clear();
+                switch (key)
+                {
+                    case '1':
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        break;
+                    case '4':
+                        break;
+                    case '5': return;
+                    default: Console.WriteLine("Error: invalid menu number");
+                        break;
+                }
+            }
         }
 
         static void EditShape()
@@ -168,14 +188,30 @@ namespace Project_1.Main
             //var circle = new Circle(5, false);
             //var json = JsonSerializer.Serialize(circle);
             //File.WriteAllText("cache.json", json);
-            var options = new JsonSerializerOptions()
+            /*var options = new JsonSerializerOptions()
             {
                 WriteIndented = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             var json = File.ReadAllText("cache.json");
             var clone = JsonSerializer.Deserialize<Shape>(json, options);
-            Console.WriteLine(clone);
+            Console.WriteLine(clone);*/
+            /*var rect = new Rectangle('*', false, 5, 3);
+            Console.WriteLine(rect);
+            var rect1 = new Rectangle('*', false, 10, 5);
+            Console.WriteLine(rect1);*/
+            var triangle = new Triangle('o', false, 5);
+            var triangle1 = new Triangle('o', true, 5);
+            Console.WriteLine(triangle);
+            Console.WriteLine(triangle.Area);
+            Console.WriteLine(triangle1);
+            Console.WriteLine();
+            var line1 = new Line('_', true, 10, false);
+            var line2 = new Line('|', true, 10, true);
+            Console.WriteLine(line1);
+            Console.WriteLine(line2);
+
+
             ///Menu();
         }
     }

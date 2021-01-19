@@ -14,8 +14,20 @@ namespace Project_1.Data
         public double Area { get; set; }
         [JsonPropertyName("perimeter")]
         public double Perimeter { get; set; }
+        protected char DrawItem { get; }
+        protected bool IsFill { get; }
 
         public Shape() { }
+
+        public Shape(char? drawItem, bool isFill)
+        {
+            if (drawItem == ' ')
+            {
+                throw new ArgumentException(nameof(drawItem));
+            }
+            DrawItem = drawItem ?? throw new ArgumentNullException(nameof(drawItem));
+            IsFill = isFill;
+        }
 
         public override string ToString()
         {

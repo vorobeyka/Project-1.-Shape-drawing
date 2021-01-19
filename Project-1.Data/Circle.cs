@@ -4,37 +4,42 @@ using System.Text;
 
 namespace Project_1.Data
 {
-    [Serializable]
     public class Circle : Shape
     {
         private int Radius { get; }
-        private bool IsFill { get; }
 
-        public Circle(int? radius, bool isFill)
+        public Circle(char? drawItem, bool isFill, int? radius) : base(drawItem, isFill)
         {
+            if (radius <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(radius));
+            }
             Radius = radius ?? throw new ArgumentNullException(nameof(radius));
             Perimeter = 2 * Math.PI * Radius;
             Area = Math.PI * Math.Pow(Radius, 2);
-            IsFill = isFill;
+            CreateCircle();
+        }
 
+        private void CreateCircle()
+        {
             ShapeMatrix = new char[Radius * 2 + 1][];
-            var r_in = Radius - 0.5;
-            var r_out = Radius + 0.5;
+            var inRadius = Radius - 0.5;
+            var outRadius = Radius + 0.5;
             var y = Radius;
 
             for (int i = 0; y >= -Radius; y--, i++)
             {
                 var line = new List<char>();
-                for (double x = -Radius; x < r_out; x += 0.5)
+                for (double x = -Radius; x < outRadius; x += 0.5)
                 {
                     var value = x * x + y * y;
-                    if (value >= r_in * r_in && value <= r_out * r_out)
+                    if (value >= inRadius * inRadius && value <= outRadius * outRadius)
                     {
-                        line.Add('@');
+                        line.Add(DrawItem);
                     }
-                    else if (IsFill && value < r_in * r_in && value < r_out * r_out)
+                    else if (IsFill && value < inRadius * inRadius && value < outRadius * outRadius)
                     {
-                        line.Add('@');
+                        line.Add(DrawItem);
                     }
                     else
                     {
