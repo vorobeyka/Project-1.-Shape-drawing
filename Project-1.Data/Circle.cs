@@ -23,14 +23,14 @@ namespace Project_1.Data
         private void CreateCircle()
         {
             ShapeMatrix = new char[Radius * 2 + 1][];
-            var inRadius = Radius - 0.5;
-            var outRadius = Radius + 0.5;
+            var inRadius = Radius - 0.4;
+            var outRadius = Radius + 0.4;
             var y = Radius;
 
             for (int i = 0; y >= -Radius; y--, i++)
             {
                 var line = new List<char>();
-                for (double x = -Radius; x < outRadius; x += 0.5)
+                for (double x = -Radius; x < outRadius; x+=0.5)
                 {
                     var value = x * x + y * y;
                     if (value >= inRadius * inRadius && value <= outRadius * outRadius)

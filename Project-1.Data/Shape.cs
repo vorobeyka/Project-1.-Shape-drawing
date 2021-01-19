@@ -8,12 +8,15 @@ namespace Project_1.Data
 {
     public class Shape
     {
-        [JsonPropertyName("shape")]
-        public char[][] ShapeMatrix { get; set; }
-        [JsonPropertyName("area")]
-        public double Area { get; set; }
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
         [JsonPropertyName("perimeter")]
         public double Perimeter { get; set; }
+        [JsonPropertyName("area")]
+        public double Area { get; set; }
+        [JsonPropertyName("shape")]
+        public char[][] ShapeMatrix { get; set; }
+        
         protected char DrawItem { get; }
         protected bool IsFill { get; }
 
@@ -27,11 +30,12 @@ namespace Project_1.Data
             }
             DrawItem = drawItem ?? throw new ArgumentNullException(nameof(drawItem));
             IsFill = isFill;
+            Id = ShapeController.GetMaxId() + 1 ?? 1;
         }
 
         public override string ToString()
         {
-            var res = "";
+            var res = $"Id: {Id}\nPerimeter: {Perimeter}\nArea: {Area}\n";
             for (int i = 0; i < ShapeMatrix.Length; i++)
             {
                 foreach (var j in ShapeMatrix[i])
