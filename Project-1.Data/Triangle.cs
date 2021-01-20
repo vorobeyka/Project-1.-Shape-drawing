@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Project_1.Data.Exceptions;
 
 namespace Project_1.Data
 {
@@ -8,13 +8,13 @@ namespace Project_1.Data
     {
         private int Height { get; }
 
-        public Triangle(char? drawItem, bool isFill, int? height) : base(drawItem, isFill)
+        public Triangle(char? drawItem, bool isFill, int height) : base(drawItem, isFill)
         {
             if (height <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(height));
+                throw new InvalidValueException("height");
             }
-            Height = height ?? throw new ArgumentNullException(nameof(height));
+            Height = height;
             Perimeter = Height * 3;
             Area = Math.Sqrt(3) * Math.Pow(Height, 2) / 4;
 

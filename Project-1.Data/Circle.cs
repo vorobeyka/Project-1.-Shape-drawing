@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_1.Data.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,13 +9,13 @@ namespace Project_1.Data
     {
         private int Radius { get; }
 
-        public Circle(char? drawItem, bool isFill, int? radius) : base(drawItem, isFill)
+        public Circle(char? drawItem, bool isFill, int radius) : base(drawItem, isFill)
         {
             if (radius <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(radius));
+                throw new InvalidValueException("radius");
             }
-            Radius = radius ?? throw new ArgumentNullException(nameof(radius));
+            Radius = radius;
             Perimeter = 2 * Math.PI * Radius;
             Area = Math.PI * Math.Pow(Radius, 2);
             CreateCircle();

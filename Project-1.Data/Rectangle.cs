@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_1.Data.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,18 +10,18 @@ namespace Project_1.Data
         private int HorizontalSide { get; }
         private int VerticalSide { get; }
 
-        public Rectangle(char? drawItem, bool isFill, int? horizontalSide, int? verticalSide) : base(drawItem, isFill)
+        public Rectangle(char? drawItem, bool isFill, int horizontalSide, int verticalSide) : base(drawItem, isFill)
         {
             if (horizontalSide <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(horizontalSide));
+                throw new InvalidValueException("horizontal side");
             }
             if (verticalSide <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(verticalSide));
+                throw new InvalidValueException("vertical side");
             }
-            HorizontalSide = horizontalSide ?? throw new ArgumentNullException(nameof(horizontalSide));
-            VerticalSide = verticalSide ?? throw new ArgumentNullException(nameof(verticalSide));
+            HorizontalSide = horizontalSide;
+            VerticalSide = verticalSide;
             Area = HorizontalSide * VerticalSide;
             Perimeter = 2 * HorizontalSide + 2 * VerticalSide;
             CreateRectangle();

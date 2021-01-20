@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_1.Data.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,13 +9,13 @@ namespace Project_1.Data
     {
         private int Length { get; }
 
-        public Line(char? drawItem, bool isFill, int? length, bool isVerticalDirection) : base(drawItem, isFill)
+        public Line(char? drawItem, bool isFill, int length, bool isVerticalDirection) : base(drawItem, isFill)
         {
             if (length <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(length));
+                throw new InvalidValueException("length");
             }
-            Length = length ?? throw new ArgumentNullException(nameof(length));
+            Length = length;
             Perimeter = Length;
             Area = Length;
 
