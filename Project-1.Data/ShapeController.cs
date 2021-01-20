@@ -12,10 +12,16 @@ namespace Project_1.Data
     {
         private static readonly string _filePath = "cache.json";
 
+        private static readonly JsonSerializerOptions _options = new JsonSerializerOptions()
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         public static void DeleteShape(int id)
         {
             var shapes = GetShapes() ?? throw new ShapeNullException("Empty shapes list");
-            var deletedShape = GetShapeById(id) ?? throw new ShapeNullException(id.ToString());
+            var deletedShape = shapes.Find(x => x.Id == id) ?? throw new ShapeNullException(id.ToString());
             Console.WriteLine(deletedShape);
             Console.Write("Do you want to delete? (y) \n-> ");
             if (IsUnswerYes())
@@ -89,13 +95,13 @@ namespace Project_1.Data
         {
             var shapes = GetShapes() ?? new List<Shape>();
             shapes.Add(newShape);
-            var json = JsonSerializer.Serialize(shapes);
+            var json = JsonSerializer.Serialize(shapes, _options);
             File.WriteAllText(_filePath, json);
         }
 
         private static void UpdateCache(List<Shape> shapes)
         {
-            var json = JsonSerializer.Serialize(shapes);
+            var json = JsonSerializer.Serialize(shapes, _options);
             File.WriteAllText(_filePath, json);
         }
 
@@ -107,9 +113,9 @@ namespace Project_1.Data
                 var clone = JsonSerializer.Deserialize<List<Shape>>(json);
                 return clone;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                throw new ShapeListNullException();
             }
         }
         

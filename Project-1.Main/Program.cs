@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using Project_1.Data;
 using Project_1.Data.Exceptions;
 
-namespace Programm
+namespace Project_1.Main
 {
     class Program
     {
@@ -145,6 +147,8 @@ namespace Programm
                     Console.ForegroundColor = textColor;
                     throw new Exception("Error: text color and background color can't be equal");
                 }
+                var settings = new Settings((int)Console.ForegroundColor, (int)Console.BackgroundColor);
+                SettingsController.SaveSettings(settings);
             }
         }
 
@@ -210,17 +214,19 @@ namespace Programm
 
         static void Main(string[] args)
         {
+            SettingsController.LoadSettings();
             string[] arr = {
                 "Project_1. Shape drawing by Andrey Basystyi.",
                 "This program can draw shapes with some customization.",
                 "Enjoy"
             };
+
             /*foreach (var i in arr)
             {
                 foreach (var j in i)
                 {
                     Console.Write(j);
-                    Thread.Sleep(100);
+                    Thread.Sleep(25);
                 }
                 Thread.Sleep(1500);
                 Console.Clear();
