@@ -20,7 +20,7 @@ namespace Project_1.Data
 
         public static void DeleteShape(int id)
         {
-            var shapes = GetShapes() ?? throw new ShapeNullException("Empty shapes list");
+            var shapes = GetShapes() ?? throw new ShapeListNullException();
             var deletedShape = shapes.Find(x => x.Id == id) ?? throw new ShapeNullException(id.ToString());
             Console.WriteLine(deletedShape);
             Console.Write("Do you want to delete? (y) \n-> ");
@@ -79,7 +79,7 @@ namespace Project_1.Data
 
         private static char GetDrawItem()
         {
-            Console.Write("Enter drawing item (whitespace forbidden):\n-> ");
+            Console.Write("Enter drawing item:\n-> ");
             var item = Console.ReadKey().KeyChar;
             return item;
         }
@@ -113,15 +113,14 @@ namespace Project_1.Data
                 var clone = JsonSerializer.Deserialize<List<Shape>>(json);
                 return clone;
             }
-            catch (Exception)
-            {
-                throw new ShapeListNullException();
-            }
+            catch (Exception) { }
+            return null;
         }
         
         public static Shape GetShapeById(int id)
         {
-            var shape = GetShapes()?.Find(x => x.Id == id) ?? throw new ShapeNullException(id.ToString()); ;
+            var shapes = GetShapes() ?? throw new ShapeListNullException();
+            var shape = shapes.Find(x => x.Id == id) ?? throw new ShapeNullException(id.ToString()); ;
             return shape;
         }
 
